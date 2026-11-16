@@ -1,0 +1,10 @@
+target/
+.idea/
+*.iml
+.vscode/
+.env
+*.log
+__pycache__/
+application-local.properties
+src/main/resources/application-local.properties
+*.class
