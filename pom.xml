@@ -15,7 +15,7 @@
     <artifactId>moveSync</artifactId>
     <version>1.0.0</version>
     <name>moveSync</name>
-    <description>CitizenTech - Semáforo inteligente (Global Solution 2026/2)</description>
+    <description>CitizenTech - Semáforo inteligente (Global Solution 2026 2°Sem)</description>
 
     <properties>
         <java.version>21</java.version>
