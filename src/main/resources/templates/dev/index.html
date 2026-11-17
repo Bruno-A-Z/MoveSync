@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo}">Painel de testes</title>
+    <link rel="stylesheet" th:href="@{/dev/app.css}">
+</head>
+<body th:attr="data-base=@{/}">
+
+<header>
+    <div>
+        <h1 th:text="${titulo}">Painel de testes</h1>
+        <p class="sub">
+            Uso de desenvolvimento · chama a API real com JWT ·
+            <a th:href="@{/swagger-ui.html}" target="_blank" rel="noopener">Swagger</a>
+        </p>
+    </div>
+    <div class="sessao">
+        <span id="sessao-info">não autenticado</span>
+        <button id="btn-sair" type="button" data-so="logado" hidden>Sair</button>
+    </div>
+</header>
+
+<main>
+
+    <!-- LOGIN -->
+    <section class="card" data-so="deslogado">
+        <h2>1. Entrar</h2>
+        <form id="form-login" class="linha">
+            <input id="login-email" type="email" placeholder="e-mail" autocomplete="username" required>
+            <input id="login-senha" type="password" placeholder="senha" autocomplete="current-password" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <div class="linha">
+            <span class="dica">Usuários de teste:</span>
+            <button type="button" class="rapido secundario"
+                    th:each="u : ${usuariosTeste}"
+                    th:attr="data-email=${u.email()},data-senha=${u.senha()}"
+                    th:text="${u.perfil()}">PERFIL</button>
+        </div>
+        <details>
+            <summary>Cadastrar novo cidadão</summary>
+            <form id="form-registro" class="linha">
+                <input id="reg-nome" placeholder="nome" required maxlength="120">
+                <input id="reg-email" type="email" placeholder="e-mail" required>
+                <input id="reg-senha" type="password" placeholder="senha (mín. 8)" minlength="8" required>
+                <button type="submit" class="secundario">Cadastrar</button>
+            </form>
+        </details>
+    </section>
+
+    <!-- CRUZAMENTO + STATUS -->
+    <section class="card larga" data-so="logado" hidden>
+        <h2>2. Cruzamento <span class="dica">(visão do cidadão)</span></h2>
+        <div class="linha">
+            <select id="sel-cruzamento"></select>
+            <button id="btn-atualizar" type="button" class="secundario">Atualizar</button>
+            <label class="check"><input id="auto-status" type="checkbox" checked> atualizar a cada 3 s</label>
+        </div>
+        <div id="status" class="vazio">Selecione um cruzamento.</div>
+    </section>
+
+    <!-- SIMULADOR -->
+    <section class="card larga" data-so="gestor" hidden>
+        <h2>3. Simulador de sensores <span class="dica">(POST /api/leituras → RabbitMQ → decisão)</span></h2>
+        <table id="tabela-sim">
+            <thead><tr><th>Via</th><th>Veículos</th><th>Fila (m)</th><th>Emergência</th><th>Atalhos</th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <div class="linha">
+            <button id="btn-enviar" type="button">Enviar leituras</button>
+            <label class="check"><input id="auto-sim" type="checkbox"> simular tráfego automático (a cada 3 s)</label>
+        </div>
+        <p class="dica">Fallback: pare de enviar por mais de 2 min e envie uma leitura de uma só via.</p>
+    </section>
+
+    <!-- DECISÕES -->
+    <section class="card larga" data-so="logado" hidden>
+        <h2>4. Decisões do semáforo <span class="dica">(explicação padrão na hora; a IA refina em segundo plano)</span></h2>
+        <div id="decisoes" class="vazio">Sem dados.</div>
+    </section>
+
+    <!-- RELATOS -->
+    <section class="card larga" data-so="logado" hidden>
+        <h2>5. Relatos dos cidadãos <span class="dica">(a IA classifica em segundo plano)</span></h2>
+        <form id="form-relato" class="coluna" data-so="cidadao" hidden>
+            <select id="rel-cruzamento"></select>
+            <textarea id="rel-descricao" rows="3" minlength="10" maxlength="1000" required
+                      placeholder="Descreva o problema (mín. 10 caracteres)"></textarea>
+            <div class="linha"><button type="submit">Enviar relato</button></div>
+        </form>
+        <div id="relatos" class="vazio">Sem relatos.</div>
+    </section>
+
+    <!-- CONSOLE -->
+    <section class="card larga" data-so="logado" hidden>
+        <h2>Console de requisições <button id="btn-limpar-log" type="button" class="secundario mini">limpar</button></h2>
+        <div id="console" class="vazio">Nenhuma requisição ainda.</div>
+    </section>
+
+</main>
+
+<div id="toast" role="status" hidden></div>
+<script th:src="@{/dev/app.js}"></script>
+</body>
+</html>
