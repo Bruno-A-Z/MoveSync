@@ -1,0 +1,10 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: semaforo-rabbitmq
+    ports:
+      - "5672:5672"     # AMQP (Spring)
+      - "15672:15672"   # painel de administração (guest/guest)
+      - "1883:1883"     # MQTT (ESP32 / simulador)
+    volumes:
+      - ./docker/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
