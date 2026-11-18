@@ -82,7 +82,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public UsuarioResponse atualizarMeuPerfil(Long idLogado, MeuPerfilRequest req) {
+    public UsuarioResponse atualizarMeuPerfil(Long idLogado, PerfilRequest req) {
         Usuario u = obter(idLogado);
         aplicarDadosBasicos(u, req.nome(), req.email(), req.senha());
         return UsuarioResponse.de(usuarios.save(u));
