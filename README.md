@@ -25,7 +25,7 @@ Semáforos de tempo fixo dão o mesmo tempo de verde para uma rua vazia e para u
 - O cidadão **vê a situação do cruzamento e entende o motivo da decisão** em linguagem simples.
 - O cidadão **reporta problemas** e o gestor recebe a fila de relatos já classificada por categoria e gravidade.
 
-**ODS relacionado:** ODS 11 — Cidades e comunidades sustentáveis.
+**ODS da ONU relacionados:** ODS 11, 13
 
 ---
 
@@ -574,6 +574,18 @@ Todos os endpoints (exceto `/api/auth/**`) exigem o token JWT. As listagens são
 | GET | `/api/relatos/meus` | `CIDADAO` | Lista os meus relatos |
 | GET | `/api/relatos?status=` | `GESTOR` | Fila de relatos, com filtro opcional por status |
 | PATCH | `/api/relatos/{id}/status` | `GESTOR` | Muda o status (`ABERTO`, `EM_ANALISE`, `RESOLVIDO`) |
+
+### 👤 Usuário `/api/usuarios`
+
+| Método | Rota | Acesso | Descrição |
+|--------|------|--------|-----------|
+| GET | `/api/usuarios/me` | autenticado | Meu perfil |
+| PUT | `/api/usuarios/me` | autenticado | Atualiza meus dados (senha opcional) |
+| GET | `/api/usuarios` | `GESTOR` | Lista usuários (paginado); filtro opcional `?perfil=` |
+| GET | `/api/usuarios/{id}` | `GESTOR` | Busca usuário por ID |
+| POST | `/api/usuarios` | `GESTOR` | Cria usuário (`CIDADAO` ou `GESTOR`) |
+| PUT | `/api/usuarios/{id}` | `GESTOR` | Atualiza usuário |
+| DELETE | `/api/usuarios/{id}` | `GESTOR` | Remove usuário (409 se tiver relatos) |
 
 ---
 

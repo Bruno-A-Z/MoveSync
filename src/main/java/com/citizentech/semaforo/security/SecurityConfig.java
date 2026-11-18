@@ -32,6 +32,8 @@ public class SecurityConfig {
                         // leitura de cruzamentos, vias e decisões: qualquer usuário autenticado
                         .requestMatchers(HttpMethod.GET, "/api/cruzamentos/**", "/api/vias/**",
                                 "/api/decisoes/**").authenticated()
+                        .requestMatchers("/api/usuarios/me").authenticated()
+                        .requestMatchers("/api/usuarios/**").hasRole("GESTOR")
                         // escrita/gestão: somente GESTOR
                         .requestMatchers("/api/cruzamentos/**", "/api/vias/**", "/api/leituras/**").hasRole("GESTOR")
                         // relatos: cidadão cria e vê os seus; gestor vê todos e muda o status
