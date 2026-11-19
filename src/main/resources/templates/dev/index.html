@@ -93,6 +93,39 @@
         <div id="relatos" class="vazio">Sem relatos.</div>
     </section>
 
+    <!-- USUÁRIOS (gestor) -->
+    <section class="card larga" data-so="gestor" hidden>
+        <h2>6. Usuários <span class="dica">(CRUD · /api/usuarios)</span></h2>
+        <form id="form-busca-usuario" class="linha">
+            <input id="usr-busca" placeholder="buscar por nome, e-mail ou id">
+            <select id="usr-filtro-perfil">
+                <option value="">todos os perfis</option>
+                <option value="CIDADAO">CIDADAO</option>
+                <option value="GESTOR">GESTOR</option>
+            </select>
+            <button type="submit">Buscar</button>
+            <button id="btn-novo-usuario" type="button" class="secundario">Novo usuário</button>
+        </form>
+        <div id="usuarios" class="vazio">Sem usuários.</div>
+        <div class="linha">
+            <button id="usr-anterior" type="button" class="secundario mini">Anterior</button>
+            <span id="usr-pagina" class="dica"></span>
+            <button id="usr-proxima" type="button" class="secundario mini">Próxima</button>
+        </div>
+        <form id="form-usuario" class="linha" hidden>
+            <strong id="usr-titulo">Novo usuário</strong>
+            <input id="usr-nome" placeholder="nome" required maxlength="120">
+            <input id="usr-email" type="email" placeholder="e-mail" required maxlength="160">
+            <input id="usr-senha" type="password" placeholder="senha (mín. 8)" minlength="8" maxlength="72" autocomplete="new-password">
+            <select id="usr-perfil">
+                <option value="CIDADAO">CIDADAO</option>
+                <option value="GESTOR">GESTOR</option>
+            </select>
+            <button type="submit">Salvar</button>
+            <button id="usr-cancelar" type="button" class="secundario">Cancelar</button>
+        </form>
+    </section>
+
     <!-- CONSOLE -->
     <section class="card larga" data-so="logado" hidden>
         <h2>Console de requisições <button id="btn-limpar-log" type="button" class="secundario mini">limpar</button></h2>
