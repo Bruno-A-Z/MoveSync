@@ -27,10 +27,16 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public Page<UsuarioResponse> listar(Perfil perfil, Pageable pageable) {
-        Page<Usuario> pagina = perfil == null
-                ? usuarios.findAll(pageable)
-                : usuarios.findByPerfil(perfil, pageable);
+    public Page<UsuarioResponse> listar(Perfil perfil, String busca, Pageable pageable) {
+        String termo = busca == null ? "" : busca.trim();
+        Page<Usuario> pagina;
+        if (termo.isEmpty()) {
+            pagina = perfil == null ? usuarios.findAll(pageable) : usuarios.findByPerfil(perfil, pageable);
+        } else {
+            pagina = perfil == null
+                    ? usuarios.buscar(termo, pageable)
+                    : usuarios.buscarPorPerfil(perfil, termo, pageable);
+        }
         return pagina.map(UsuarioResponse::de);
     }
 
